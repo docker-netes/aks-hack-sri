@@ -1,0 +1,6 @@
+{
+  "aksServicePrincipalAppId": { "value": "$appId" },
+  "aksServicePrincipalClientSecret": { "value": "$password" },
+  "aksServicePrincipalObjectId": { "value": "$objectId" },
+  "aksEnableRBAC": { "value": false }
+}

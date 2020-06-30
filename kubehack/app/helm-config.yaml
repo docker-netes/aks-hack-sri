@@ -1,0 +1,46 @@
+# This file contains the essential configs for the ingress controller helm chart
+
+# Verbosity level of the App Gateway Ingress Controller
+verbosityLevel: 3
+
+################################################################################
+# Specify which application gateway the ingress controller will manage
+#
+appgw:
+    subscriptionId: a1a5a0a6-8603-4e3b-9819-b120f7c2b6b6
+    resourceGroup: aksrg
+    name: canarysgateway
+    usePrivateIP: false
+
+    # Setting appgw.shared to "true" will create an AzureIngressProhibitedTarget CRD.
+    # This prohibits AGIC from applying config for any host/path.
+    # Use "kubectl get AzureIngressProhibitedTargets" to view and change this.
+    shared: false
+
+################################################################################
+# Specify which kubernetes namespace the ingress controller will watch
+# Default value is "default"
+# Leaving this variable out or setting it to blank or empty string would
+# result in Ingress Controller observing all acessible namespaces.
+#
+# kubernetes:
+#   watchNamespace: <namespace>
+
+################################################################################
+# Specify the authentication with Azure Resource Manager
+#
+# Two authentication methods are available:
+# - Option 1: AAD-Pod-Identity (https://github.com/Azure/aad-pod-identity)
+#armAuth:
+#    type: aadPodIdentity
+#    identityResourceID: <identityResourceId>
+#    identityClientID:  <identityClientId>
+# Alternatively you can use Service Principal credentials
+armAuth:
+   type: servicePrincipal
+   secretJSON: ewogICJjbGllbnRJZCI6ICIzYzk2ZWU4ZS04MWI3LTRmODMtYjY4NS04YWFmNjljMzIwY2MiLAogICJjbGllbnRTZWNyZXQiOiAiNjg1d3UyazNqYndUfkYxTDlxbWM4bjl1VXV0THdaV1JNVSIsCiAgInN1YnNjcmlwdGlvbklkIjogImExYTVhMGE2LTg2MDMtNGUzYi05ODE5LWIxMjBmN2MyYjZiNiIsCiAgInRlbmFudElkIjogImVhYmQ1M2UwLTk3ZDItNDYyNC04YzFlLTIyYTBmMTJjMTY1ZiIsCiAgImFjdGl2ZURpcmVjdG9yeUVuZHBvaW50VXJsIjogImh0dHBzOi8vbG9naW4ubWljcm9zb2Z0b25saW5lLmNvbSIsCiAgInJlc291cmNlTWFuYWdlckVuZHBvaW50VXJsIjogImh0dHBzOi8vbWFuYWdlbWVudC5henVyZS5jb20vIiwKICAiYWN0aXZlRGlyZWN0b3J5R3JhcGhSZXNvdXJjZUlkIjogImh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvIiwKICAic3FsTWFuYWdlbWVudEVuZHBvaW50VXJsIjogImh0dHBzOi8vbWFuYWdlbWVudC5jb3JlLndpbmRvd3MubmV0Ojg0NDMvIiwKICAiZ2FsbGVyeUVuZHBvaW50VXJsIjogImh0dHBzOi8vZ2FsbGVyeS5henVyZS5jb20vIiwKICAibWFuYWdlbWVudEVuZHBvaW50VXJsIjogImh0dHBzOi8vbWFuYWdlbWVudC5jb3JlLndpbmRvd3MubmV0LyIKfQo=
+
+################################################################################
+# Specify if the cluster is RBAC enabled or not
+rbac:
+    enabled: true # true/false
